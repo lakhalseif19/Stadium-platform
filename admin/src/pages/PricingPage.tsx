@@ -1,0 +1,15 @@
+import React, { useEffect, useState } from 'react';
+import { Calendar, DollarSign } from 'lucide-react';
+import { api } from '../api/client';
+
+interface PriceRow { id: string; field_name: string; season_name: string; season_status: string; coverage: string; duration_type: string; amount: string | number; currency: string; }
+interface SeasonRow { id: string; name: string; starts_on: string; ends_on: string; status: string; }
+export const PricingPage: React.FC = () => {
+  const [prices, setPrices] = useState<PriceRow[]>([]); const [seasons, setSeasons] = useState<SeasonRow[]>([]); const [loading, setLoading] = useState(true); const [error, setError] = useState<string | null>(null);
+  useEffect(() => { Promise.all([api.get<PriceRow[]>('/pricing'), api.get<SeasonRow[]>('/seasons')]).then(([priceRows, seasonRows]) => { setPrices(priceRows); setSeasons(seasonRows); }).catch((reason: unknown) => setError(reason instanceof Error ? reason.message : 'Impossible de charger les tarifs.')).finally(() => setLoading(false)); }, []);
+  return <div className="space-y-6"><div><h1 className="text-2xl font-bold text-gray-900">Tarifs & saisons</h1><p className="mt-1 text-sm text-gray-500">Données tarifaires et saisons servies par l’API.</p></div>
+    {error && <p role="alert" className="rounded bg-red-50 p-3 text-sm text-red-700">{error}</p>}{loading && <p role="status" className="py-8 text-center">Chargement…</p>}
+    {!loading && !error && <><section className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm"><h2 className="mb-4 flex items-center gap-2 font-bold"><Calendar className="h-5 w-5 text-brand-600"/>Saisons enregistrées</h2>{seasons.length === 0 ? <p className="text-sm text-gray-500">Aucune saison n’est configurée dans le backend.</p> : <div className="grid gap-3 md:grid-cols-3">{seasons.map((season) => <article key={season.id} className="rounded border p-4"><strong>{season.name}</strong><p className="text-sm">{new Date(season.starts_on).toLocaleDateString('fr-DZ')} – {new Date(season.ends_on).toLocaleDateString('fr-DZ')}</p><span className="text-xs text-gray-500">{season.status}</span></article>)}</div>}</section>
+    <section className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm"><h2 className="mb-4 flex items-center gap-2 font-bold"><DollarSign className="h-5 w-5 text-brand-600"/>Grille tarifaire</h2>{prices.length === 0 ? <p className="text-sm text-gray-500">Aucun tarif n’est configuré dans le backend.</p> : <div className="overflow-x-auto"><table className="w-full text-left text-sm"><thead className="bg-gray-50 text-xs uppercase text-gray-500"><tr><th className="p-3">Terrain</th><th className="p-3">Saison</th><th className="p-3">Couverture</th><th className="p-3">Durée</th><th className="p-3 text-right">Montant</th></tr></thead><tbody className="divide-y">{prices.map((price) => <tr key={price.id}><td className="p-3">{price.field_name}</td><td className="p-3">{price.season_name}</td><td className="p-3">{price.coverage}</td><td className="p-3">{price.duration_type}</td><td className="p-3 text-right">{price.amount} {price.currency}</td></tr>)}</tbody></table></div>}</section></>}
+  </div>;
+};

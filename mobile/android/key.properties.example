@@ -1,0 +1,6 @@
+# Copy to key.properties, then fill in values locally. Never commit key.properties.
+applicationId=
+storeFile=C:/absolute/path/to/your-release-key.jks
+storePassword=
+keyAlias=
+keyPassword=

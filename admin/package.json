@@ -1,0 +1,40 @@
+{
+  "name": "stadium-platform-admin",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "format": "prettier --write src/api/client.ts src/context/AuthContext.tsx src/pages/LoginPage.tsx src/pages/PaymentsPage.tsx src/types/index.ts vite.config.ts test/*.ts",
+    "format:check": "prettier --check src/api/client.ts src/context/AuthContext.tsx src/pages/LoginPage.tsx src/pages/PaymentsPage.tsx src/types/index.ts vite.config.ts test/*.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.4",
+    "tailwind-merge": "^2.5.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.71.2",
+    "@typescript-eslint/parser": "^8.71.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.2",
+    "postcss": "^8.4.49",
+    "prettier": "^3.9.10",
+    "tailwindcss": "^3.4.16",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3",
+    "vitest": "^4.1.12"
+  }
+}

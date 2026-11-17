@@ -1,0 +1,20 @@
+.dart_tool/
+.packages
+build/
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+*.sqlite
+*.log
+.DS_Store
+ios/.generated/
+android/app/src/main/res/values-v31/colors.xml
+
+mobile/oraclejdk-27/
+
+# Local Java JDK
+/oracleJdk-27/
+/build/
+/.dart_tool/
